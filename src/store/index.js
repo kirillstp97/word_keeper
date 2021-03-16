@@ -3,8 +3,7 @@ import { findWords, getWordParams } from '@/api'
 
 export default createStore({
   state: {
-  },
-  mutations: {
+    searched_words: []
   },
   actions: {
     async searchByPattern ({ commit }, param) {
@@ -19,6 +18,9 @@ export default createStore({
       localStorage.setItem('searched_list', JSON.stringify(wordListParams))
     }
   },
-  modules: {
+  mutations: {
+    updateSearchedList (state, data) {
+      state.searched_words = data
+    }
   }
 })
