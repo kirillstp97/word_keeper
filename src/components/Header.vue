@@ -1,6 +1,6 @@
 <template>
   <header>
-    <nav id="nav">
+    <nav>
       <router-link to="/">Word Keeper</router-link>
       <router-link to="/favorites">
         <i class="fas fa-star"></i>
@@ -13,22 +13,20 @@
 <script>
 export default {
   name: 'Header'
-
 }
 </script>
 
-<style lang="scss">
-  #nav {
+<style lang="scss" scoped>
+  nav {
     display: flex;
     justify-content: space-between;
-    background: #75b9ff;
+    background: $theme-color;
     padding: 20px 30px;
     border-radius: 6px;
 
     a {
       font-weight: bold;
       color: #eeeefa;
-
       &.router-link-exact-active {
         color: #fff;
         text-shadow: 0 0 2px #727272;
