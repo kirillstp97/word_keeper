@@ -1,7 +1,7 @@
 const API_URL = new URL('https://wordsapiv1.p.rapidapi.com')
 const headers = {
   'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com',
-  'X-RapidAPI-Key': API_KEY
+  'X-RapidAPI-Key': process.env.API_KEY
 }
 
 export async function findWords (pattern) {
