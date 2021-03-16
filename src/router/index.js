@@ -12,6 +12,11 @@ const routes = [
     path: '/favorites',
     name: 'Favorites',
     component: Favorites
+  },
+  {
+    path: '/parsing/:word',
+    name: 'Parsing',
+    component: () => import('@/views/Parsing.vue')
   }
 ]
 
