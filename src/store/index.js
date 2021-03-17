@@ -6,16 +6,17 @@ export default createStore({
     searched_words: []
   },
   actions: {
-    async searchByPattern ({ commit }, param) {
-      const wordList = await findWords(param)
-      if (!wordList.length) return []
+    async searchByPattern ({ commit }, word) {
+      const wordList = await findWords(word)
+      if (!wordList || !wordList.length) return []
 
       const wordListParams = await Promise.all(
         wordList.map(word => getWordParams(word))
       )
 
       commit('updateSearchedList', wordListParams)
-      localStorage.setItem('searched_list', JSON.stringify(wordListParams))
+      localStorage.setItem('saved_searched_list', JSON.stringify(wordListParams))
+    },
     }
   },
   mutations: {
