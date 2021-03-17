@@ -33,6 +33,19 @@ export default createStore({
     updateFavoriteList (state, data) {
       state.favorite_words = data
     },
+  getters: {
+    searchedWords: ({ searched_words, favorite_words }) => {
+      if (!searched_words || !searched_words.length) return []
+
+      return searched_words.map(({ word, results }) => {
+        const { definition, partOfSpeech } = results[0]
+        return {
+          word,
+          definition,
+          partOfSpeech,
+          isFavorite: word in favorite_words
+        }
+      })
     }
   }
 })
