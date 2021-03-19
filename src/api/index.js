@@ -1,7 +1,7 @@
 const API_URL = new URL('https://wordsapiv1.p.rapidapi.com')
 const headers = {
   'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com',
-  'X-RapidAPI-Key': process.env.API_KEY
+  'X-RapidAPI-Key': process.env.VUE_APP_API_KEY
 }
 
 export async function findWords (pattern) {
@@ -19,16 +19,17 @@ export async function findWords (pattern) {
   return results.data
 }
 
-export async function getWordParams (_word) {
+export async function wordParams (_word) {
   API_URL.pathname = `words/${_word}`
   const data = await fetch(API_URL, { headers })
   if (data.status !== 200) return []
 
   const { word, results, pronunciation, syllables } = await data.json()
+
   return {
     word,
+    results,
     ...syllables && { syllables: syllables.list },
-    ...pronunciation && { pronunciation: pronunciation.all },
-    definition: results.map(({ definition }) => definition)
+    ...pronunciation && { pronunciation: pronunciation.all }
   }
 }
