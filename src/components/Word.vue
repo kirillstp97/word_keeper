@@ -2,7 +2,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'Word',
@@ -12,9 +12,9 @@ export default {
       definition: String,
       partOfSpeech: String,
       isFavorite: Boolean
-  },
+    },
     hasDraggable: Boolean
   },
-  methods: mapMutations(['toggleFavoriteWords'])
+  methods: mapActions(['toggleFavoriteWords'])
 }
 </script>
