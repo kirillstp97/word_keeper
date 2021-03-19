@@ -33,10 +33,18 @@ export default createStore({
       state.favorite_words = getLocalData('saved_favorite_list') || {}
       state.not_saved_word = getLocalData('not_saved_word') || {}
     },
+    saveSearchedList (state, data) {
       state.searched_words = data
+      localStorage.setItem('saved_searched_list', JSON.stringify(data))
     },
-    updateFavoriteList (state, data) {
+    saveFavoritesList (state, data) {
       state.favorite_words = data
+      localStorage.setItem('saved_favorite_list', JSON.stringify(data))
+    },
+    update_not_saved_word (state, data) {
+      state.not_saved_word = data
+      localStorage.setItem('not_saved_word', JSON.stringify(data))
+    }
     },
   getters: {
     searchedWords: ({ searched_words, favorite_words }) => {
