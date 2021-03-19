@@ -48,18 +48,20 @@ export default createStore({
     }
     },
   getters: {
-    searchedWords: ({ searched_words, favorite_words }) => {
-      if (!searched_words || !searched_words.length) return []
+    formingCardList: () => words_list => {
+      if (!Array.isArray(words_list) || !words_list.length) return []
 
-      return searched_words.map(({ word, results }) => {
+      return words_list.map(({ word, results, isFavorite, order }, index) => {
         const { definition, partOfSpeech } = results[0]
         return {
           word,
           definition,
           partOfSpeech,
-          isFavorite: word in favorite_words
+          isFavorite,
+          order: order || ~index
         }
       })
+    },
     }
   }
 })
