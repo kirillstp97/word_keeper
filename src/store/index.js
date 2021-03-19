@@ -4,7 +4,8 @@ import { findWords, getWordParams } from '@/api'
 export default createStore({
   state: {
     searched_words: [],
-    favorite_words: {}
+    favorite_words: {},
+    not_saved_word: {}
   },
   actions: {
     async searchByPattern ({ commit }, word) {
