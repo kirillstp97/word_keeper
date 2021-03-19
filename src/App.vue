@@ -4,7 +4,6 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 import Header from '@/components/Header'
 
 export default {
@@ -12,9 +11,8 @@ export default {
   components: {
     Header
   },
-  methods: mapActions(['getLocalSavedData']),
   created () {
-    this.getLocalSavedData()
+    this.$store.commit('getLocalSavedData')
   }
 }
 </script>

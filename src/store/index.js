@@ -27,7 +27,12 @@ export default createStore({
     }
   },
   mutations: {
-    updateSearchedList (state, data) {
+    getLocalSavedData (state) {
+      const getLocalData = keyName => JSON.parse(localStorage.getItem(keyName))
+      state.searched_words = getLocalData('saved_searched_list') || {}
+      state.favorite_words = getLocalData('saved_favorite_list') || {}
+      state.not_saved_word = getLocalData('not_saved_word') || {}
+    },
       state.searched_words = data
     },
     updateFavoriteList (state, data) {
