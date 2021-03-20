@@ -19,11 +19,29 @@ export default createStore({
       commit('updateSearchedList', wordListParams)
       localStorage.setItem('saved_searched_list', JSON.stringify(wordListParams))
     },
-    getLocalSavedData ({ commit }) {
-      const getLocalSearchedWords = JSON.parse(localStorage.getItem('saved_searched_list'))
-      const getLocalFavoriteWords = JSON.parse(localStorage.getItem('saved_favorite_list'))
-      commit('updateSearchedList', getLocalSearchedWords || [])
-      commit('updateFavoriteList', getLocalFavoriteWords || {})
+    toggleFavoriteWords ({ commit, state }, { word }) {
+      const { favorite_words, searched_words, reserved_word } = state
+      const hasInFavorites = word in favorite_words
+      let unsaved_params = reserved_word.word === word
+      let word_params = searched_words.find(e => e.word === word)
+
+      if (word_params) {
+        unsaved_params = false
+      } else if (unsaved_params) {
+        word_params = reserved_word
+      }
+      hasInFavorites && delete favorite_words[word]
+      word_params && (word_params.isFavorite = !hasInFavorites)
+
+      if (!hasInFavorites && word_params) {
+        favorite_words[word_params.word] = word_params
+      }
+      commit('saveFavoritesList', favorite_words)
+
+      if (!word_params) return false
+      return unsaved_params
+        ? commit('saveReservedWord', word_params)
+        : commit('saveSearchedList', searched_words)
     },
     }
   },
