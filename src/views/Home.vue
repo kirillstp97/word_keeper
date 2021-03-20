@@ -1,6 +1,18 @@
 <template>
-  <SearchPanel/>
-  <WordList/>
+  <div class="container">
+    <SearchPanel @search-action="searchByPattern"/>
+    <div class="wordlist">
+      <Word
+        v-for="word_params in searchedList"
+        :key="word_params.word"
+        :wordParams="word_params"
+      />
+      <div
+        class="wordlist__message"
+        v-if="!searchedList.length"
+      >No results, please use a search field</div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -14,11 +26,7 @@ export default {
     Word,
     SearchPanel
   },
-  computed: {
-    ...mapGetters({
-      searchedList: 'getSearchedList'
-    })
-  },
+  computed: mapGetters({ searchedList: 'getSearchedList' }),
   methods: mapActions(['searchByPattern'])
 }
 </script>
