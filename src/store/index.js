@@ -43,6 +43,10 @@ export default createStore({
         ? commit('saveReservedWord', word_params)
         : commit('saveSearchedList', searched_words)
     },
+    resortFavoritesAndSaveList ({ commit, state }, newSort) {
+      const favlist = state.favorite_words
+      newSort.forEach(({ word }, index) => { favlist[word].order = index })
+      commit('saveFavoritesList', favlist)
     }
   },
   mutations: {
