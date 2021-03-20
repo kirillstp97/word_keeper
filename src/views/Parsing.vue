@@ -1,7 +1,7 @@
 <template>
-`  <fieldset v-if="word_params" class="parsing">
+  <fieldset v-if="word_params" class="parsing">
     <i
-      @click="toggleFavoriteWords(word_params)"
+      @click="updateFavoriteWord"
       :title="word_params.isFavorite ? 'Added to favorites' : 'Add to favorites'"
       class="fa-star fas parsing__favorite"
       :class="word_params.isFavorite && 'parsing__favorite_active'"
@@ -50,9 +50,18 @@ import { mapActions } from 'vuex'
 export default {
   name: 'Parsing',
   data: () => ({ word_params: false }),
-  methods: mapActions(['toggleFavoriteWords', 'findLocalOrSearchFullWordParams']),
-  async created () {
-    this.word_params = await this.findLocalOrSearchFullWordParams(this.$route.params.word)
+  created () {
+    this.getWordParams()
+  },
+  methods: {
+    ...mapActions(['toggleFavoriteWords', 'findLocalOrSearchFullWordParams']),
+    async updateFavoriteWord () {
+      await this.toggleFavoriteWords(this.word_params)
+      this.getWordParams()
+    },
+    async getWordParams () {
+      this.word_params = await this.findLocalOrSearchFullWordParams(this.$route.params.word)
+    }
   }
 }
 </script>
