@@ -5,7 +5,7 @@ export default createStore({
   state: {
     searched_words: [],
     favorite_words: {},
-    not_saved_word: {}
+    reserved_word: {}
   },
   actions: {
     async searchByPattern ({ commit }, word) {
@@ -32,7 +32,7 @@ export default createStore({
       const getLocalData = keyName => JSON.parse(localStorage.getItem(keyName))
       state.searched_words = getLocalData('saved_searched_list') || {}
       state.favorite_words = getLocalData('saved_favorite_list') || {}
-      state.not_saved_word = getLocalData('not_saved_word') || {}
+      state.reserved_word = getLocalData('reserved_word') || {}
     },
     saveSearchedList (state, data) {
       state.searched_words = data
@@ -42,9 +42,9 @@ export default createStore({
       state.favorite_words = data
       data && localStorage.setItem('saved_favorite_list', JSON.stringify(data))
     },
-    update_not_saved_word (state, data) {
-      state.not_saved_word = data
-      data && localStorage.setItem('not_saved_word', JSON.stringify(data))
+    saveReservedWord (state, data) {
+      state.reserved_word = data
+      data && localStorage.setItem('reserved_word', JSON.stringify(data))
     }
   },
   getters: {
