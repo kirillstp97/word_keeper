@@ -36,17 +36,17 @@ export default createStore({
     },
     saveSearchedList (state, data) {
       state.searched_words = data
-      localStorage.setItem('saved_searched_list', JSON.stringify(data))
+      data && localStorage.setItem('saved_searched_list', JSON.stringify(data))
     },
     saveFavoritesList (state, data) {
       state.favorite_words = data
-      localStorage.setItem('saved_favorite_list', JSON.stringify(data))
+      data && localStorage.setItem('saved_favorite_list', JSON.stringify(data))
     },
     update_not_saved_word (state, data) {
       state.not_saved_word = data
-      localStorage.setItem('not_saved_word', JSON.stringify(data))
+      data && localStorage.setItem('not_saved_word', JSON.stringify(data))
     }
-    },
+  },
   getters: {
     formingCardList: () => words_list => {
       if (!Array.isArray(words_list) || !words_list.length) return []
