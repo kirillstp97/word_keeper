@@ -80,6 +80,9 @@ export default createStore({
         }
       })
     },
+    getSearchedList: ({ searched_words }, { formingCardList }) =>
+      formingCardList(searched_words),
+
     }
   }
 })
