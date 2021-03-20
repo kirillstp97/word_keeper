@@ -49,5 +49,13 @@ export default {
     searchedQuery: '',
     filteredByPartSpeech: []
   }),
+  methods: {
+    filterByPartSpeech (filters) {
+      this.filteredByPartSpeech = (filters.length && filters) || []
+    },
+    searchedFavorites (pattern) {
+      this.searchedQuery = pattern
+    }
+  }
 }
 </script>
