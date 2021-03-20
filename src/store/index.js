@@ -83,6 +83,10 @@ export default createStore({
     getSearchedList: ({ searched_words }, { formingCardList }) =>
       formingCardList(searched_words),
 
+    getFavoritesList: ({ favorite_words }, { formingCardList }) => {
+      const list = formingCardList(Object.values(favorite_words))
+      return list.sort(({ order }, next) => order - next.order)
+    },
     }
   }
 })
