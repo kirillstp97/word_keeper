@@ -23,3 +23,22 @@ a {
 #app {
   padding: 10px 20px;
 }
+
+.content-title {
+	margin: 20px 6px;
+}
+
+.container {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 20px;
+}
+
+.wordlist {
+	flex-basis: 80%;
+	overflow: hidden;
+	&__message {
+		text-align: center;
+    font: 300 26px 'Roboto';
+	}
+}
