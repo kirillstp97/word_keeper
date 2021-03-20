@@ -33,7 +33,6 @@
 
 <script>
 import draggable from 'vuedraggable'
-import Word from '@/components/Word'
 import SearchPanel from '@/components/SearchPanel'
 import Word from '@/components/Word'
 import { mapGetters } from 'vuex'
@@ -49,6 +48,30 @@ export default {
     searchedQuery: '',
     filteredByPartSpeech: []
   }),
+  computed: {
+    ...mapGetters([
+      'getFavoritesList',
+      'getSearchInFavorites'
+    ]),
+    favoritedWords: {
+      get () {
+        if (!this.getFavoritesList.length) return []
+        const bySearch = this.searchedQuery.length && this.searchedQuery
+        const selectedPartSpeechList = this.filteredByPartSpeech.length && this.filteredByPartSpeech
+        const filteringFavorites = (bySearch && this.getSearchInFavorites(bySearch)) || this.getFavoritesList
+
+        if (filteringFavorites && selectedPartSpeechList) {
+          return filteringFavorites.filter(({ partOfSpeech }) =>
+            selectedPartSpeechList.includes(partOfSpeech)
+          )
+        }
+        return filteringFavorites || []
+      },
+      set (newSort) {
+        this.$store.dispatch('resortFavoritesAndSaveList', newSort)
+      }
+    }
+  },
   methods: {
     filterByPartSpeech (filters) {
       this.filteredByPartSpeech = (filters.length && filters) || []
