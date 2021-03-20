@@ -87,7 +87,6 @@ export default {
     align-items: center;
     flex-direction: row-reverse;
     justify-content: flex-end;
-    font-size: 18px;
     user-select: none;
     cursor: pointer;
     margin: 12px 0;
@@ -98,8 +97,8 @@ export default {
       }
     }
     &__mark {
-      height: 1rem;
-      width: 1rem;
+      height: 1.1rem;
+      width: 1.1rem;
       border-radius: 2px;
       margin-right: 0.6rem;
       background: #fff;
