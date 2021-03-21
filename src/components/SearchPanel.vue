@@ -45,7 +45,8 @@ export default {
   emits: ['search-action', 'part-speech-action'],
   computed: {
     filtersList () {
-      return new Set(this.needFilters.map(({ partOfSpeech }) => partOfSpeech))
+      const filter_list = new Set(this.needFilters.map(({ partOfSpeech }) => partOfSpeech))
+      return [...filter_list].sort()
     }
   }
 }
