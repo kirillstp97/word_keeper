@@ -8,13 +8,13 @@ export default createStore({
     reserved_word: {}
   },
   actions: {
-    async searchByPattern ({ commit }, word) {
-      const wordList = await findWords(word)
-      if (!wordList || !wordList.length) return []
+    async searchByPattern ({ commit, dispatch }, word) {
+      const word_list = await findWords(word)
+      if (!Array.isArray(word_list) || !word_list.length) return []
 
-      const wordListParams = await Promise.all(
-        wordList.map(word => getWordParams(word))
-      )
+      const word_list_with_params = await dispatch('searchFullWordParams', word_list)
+      commit('saveSearchedList', word_list_with_params)
+    },
 
       commit('updateSearchedList', wordListParams)
       localStorage.setItem('saved_searched_list', JSON.stringify(wordListParams))
