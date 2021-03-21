@@ -58,12 +58,13 @@ export default {
         if (!this.getFavoritesList.length) return []
         const bySearch = this.searchedQuery.length && this.searchedQuery
         const selectedPartSpeechList = this.filteredByPartSpeech.length && this.filteredByPartSpeech
-        const filteringFavorites = (bySearch && this.getSearchInFavorites(bySearch)) || this.getFavoritesList
+        let filteringFavorites = (bySearch && this.getSearchInFavorites(bySearch)) || this.getFavoritesList
 
         if (filteringFavorites && selectedPartSpeechList) {
-          return filteringFavorites.filter(({ partOfSpeech }) =>
+          const byPartSpeech = filteringFavorites.filter(({ partOfSpeech }) =>
             selectedPartSpeechList.includes(partOfSpeech)
           )
+          byPartSpeech.length && (filteringFavorites = byPartSpeech)
         }
         return filteringFavorites || []
       },
