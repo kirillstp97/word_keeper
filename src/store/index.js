@@ -91,6 +91,13 @@ export default createStore({
       const list = formingCardList(Object.values(favorite_words))
       return list.sort(({ order }, next) => order - next.order)
     },
+    getSearchInFavorites: ({ favorite_words }, { formingCardList }) => pattern => {
+      if (!/^[0-9a-zA-Z-\s]+$/.test(pattern)) return []
+
+      const regexFilter = Object.values(favorite_words).filter(({ word }) =>
+        new RegExp('^' + pattern).test(word)
+      )
+      return formingCardList(regexFilter)
     }
   }
 })
