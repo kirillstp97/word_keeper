@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import { findWords, getWordParams } from '@/api'
+import { findWords, wordParams } from '@/api'
 
 export default createStore({
   state: {
@@ -25,9 +25,16 @@ export default createStore({
           return data
         })
     },
+    async findLocalOrSearchFullWordParams ({ commit, state, dispatch }, find_word) {
+      const { favorite_words, searched_words, reserved_word } = state
+      const found_word = (reserved_word.word === find_word && reserved_word) ||
+        favorite_words[find_word] ||
+        searched_words.find(({ word }) => word === find_word)
+      if (found_word) return found_word
 
-      commit('updateSearchedList', wordListParams)
-      localStorage.setItem('saved_searched_list', JSON.stringify(wordListParams))
+      const [word_params] = await dispatch('searchFullWordParams', find_word.split())
+      commit('saveReservedWord', word_params)
+      return word_params || false
     },
     toggleFavoriteWords ({ commit, state }, { word }) {
       const { favorite_words, searched_words, reserved_word } = state
