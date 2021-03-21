@@ -15,6 +15,16 @@ export default createStore({
       const word_list_with_params = await dispatch('searchFullWordParams', word_list)
       commit('saveSearchedList', word_list_with_params)
     },
+    async searchFullWordParams ({ state }, wordlist) {
+      return (await Promise.all(
+        wordlist.map(word => wordParams(word))
+      ))
+        .filter(({ results }) => results && results.length)
+        .map(data => {
+          data.isFavorite = data.word in state.favorite_words
+          return data
+        })
+    },
 
       commit('updateSearchedList', wordListParams)
       localStorage.setItem('saved_searched_list', JSON.stringify(wordListParams))
