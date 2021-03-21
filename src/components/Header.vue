@@ -28,6 +28,7 @@ export default {
       font-weight: bold;
       color: #eeeefa;
       user-select: none;
+      &:hover,
       &.router-link-exact-active {
         color: #fff;
         text-shadow: 0 0 2px #727272;
