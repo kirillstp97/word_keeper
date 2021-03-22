@@ -30,8 +30,9 @@ a {
 
 .container {
 	display: flex;
-	justify-content: space-between;
 	margin-top: 20px;
+	position: relative;
+	justify-content: space-between;
 }
 
 .wordlist {

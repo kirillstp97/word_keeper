@@ -2,6 +2,7 @@
   <div class="container">
     <SearchPanel @search-action="searchByPattern"/>
     <div class="wordlist">
+      <Spinner/>
       <Word
         v-for="word_params in searchedList"
         :key="word_params.word"

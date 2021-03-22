@@ -1,6 +1,8 @@
 <template>
+  <Spinner/>
   <fieldset v-if="word_params" class="parsing">
     <i
+      v-if="word_params.isFavorite"
       @click="updateFavoriteWord"
       :title="word_params.isFavorite ? 'Added to favorites' : 'Add to favorites'"
       class="fa-star fas parsing__favorite"
@@ -49,7 +51,7 @@ import { mapActions } from 'vuex'
 
 export default {
   name: 'Parsing',
-  data: () => ({ word_params: false }),
+  data: () => ({ word_params: {} }),
   created () {
     this.getWordParams()
   },

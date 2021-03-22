@@ -5,14 +5,21 @@ export default createStore({
   state: {
     searched_words: [],
     favorite_words: {},
-    reserved_word: {}
+    reserved_word: {},
+    spinner: false
   },
   actions: {
     async searchByPattern ({ commit, dispatch }, word) {
+      if (!word.length) return []
+      commit('toggleLoadingStatus', true)
       const word_list = await findWords(word)
-      if (!Array.isArray(word_list) || !word_list.length) return []
 
+      if (!Array.isArray(word_list) || !word_list.length) {
+        commit('toggleLoadingStatus', false)
+        return []
+      }
       const word_list_with_params = await dispatch('searchFullWordParams', word_list)
+      commit('toggleLoadingStatus', false)
       commit('saveSearchedList', word_list_with_params)
     },
     async searchFullWordParams ({ state }, wordlist) {
@@ -27,13 +34,15 @@ export default createStore({
     },
     async findLocalOrSearchFullWordParams ({ commit, state, dispatch }, find_word) {
       const { favorite_words, searched_words, reserved_word } = state
-      const found_word = (reserved_word.word === find_word && reserved_word) ||
+      const found_word =
+        (reserved_word.word === find_word && reserved_word) ||
         favorite_words[find_word] ||
         searched_words.find(({ word }) => word === find_word)
       if (found_word) return found_word
-
+      commit('toggleLoadingStatus', true)
       const [word_params] = await dispatch('searchFullWordParams', find_word.split())
       commit('saveReservedWord', word_params)
+      commit('toggleLoadingStatus', false)
       return word_params || false
     },
     toggleFavoriteWords ({ commit, state }, { word }) {
@@ -84,6 +93,9 @@ export default createStore({
     saveReservedWord (state, data) {
       state.reserved_word = data
       data && localStorage.setItem('reserved_word', JSON.stringify(data))
+    },
+    toggleLoadingStatus (state, data) {
+      state.spinner = data
     }
   },
   getters: {
